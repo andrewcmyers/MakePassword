@@ -7,9 +7,8 @@ import java.util.prefs.AbstractPreferences;
 import org.apache.commons.codec.binary.Base64;
 
 public class Pwgen {
-	
-	final String base64_chars =
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+	final String base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 	final String punctuation = ".!#%&()*+,-./<=>?";
 	final String digits = "0123456789";
 
@@ -27,18 +26,18 @@ public class Pwgen {
 		}
 		try {
 			md.reset();
-		md.update(id.getBytes("UTF-8"));
-		md.update(material, 0 , key_length);
+			md.update(id.getBytes("UTF-8"));
+			md.update(material, 0, key_length);
 		} catch (UnsupportedEncodingException e) {
 			crash.apply(e.getMessage());
 		}
 		byte[] digest = md.digest();
-		//Base64.Encoder encoder = Base64.getEncoder();
+		// Base64.Encoder encoder = Base64.getEncoder();
 		Base64 encoder = new Base64();
 		byte[] encoding = encoder.encode(digest);
 		String s = null;
 		try {
-		   s = new String(encoding, "ISO-8859-1");
+			s = new String(encoding, "ISO-8859-1");
 		} catch (UnsupportedEncodingException e) {
 			crash.apply(e.getMessage());
 		}
@@ -50,22 +49,22 @@ public class Pwgen {
 		char p7 = digits.charAt(i7 % 10);
 		char p8 = digits.charAt(i8 % 10);
 		String unshuffled = prefix + p6 + p7 + p8;
-	
+
 		if (alpha) {
-		    String alphanumeric = base64_chars.substring(0, 62);
-		    StringBuilder b = new StringBuilder();
-		    for (int j = 0; j < 8; j++) {
-		    	int i = base64_chars.indexOf(encoding[j]);
-		    	b.append(alphanumeric.charAt(i % 62));
-		    }
-		    unshuffled = b.toString();
+			String alphanumeric = base64_chars.substring(0, 62);
+			StringBuilder b = new StringBuilder();
+			for (int j = 0; j < 8; j++) {
+				int i = base64_chars.indexOf(encoding[j]);
+				b.append(alphanumeric.charAt(i % 62));
+			}
+			unshuffled = b.toString();
 		} else if (numericonly) {
 			StringBuilder b = new StringBuilder();
-		    for (int j = 0; j < 8; j++) {
-		    	int i = base64_chars.indexOf(encoding[j]);
-		    	b.append(digits.charAt(i % 10));
-		    }
-		    unshuffled = b.toString();
+			for (int j = 0; j < 8; j++) {
+				int i = base64_chars.indexOf(encoding[j]);
+				b.append(digits.charAt(i % 10));
+			}
+			unshuffled = b.toString();
 		}
 		String result = unshuffled;
 		if (shuffle) {
@@ -73,19 +72,20 @@ public class Pwgen {
 			int i9 = base64_chars.indexOf(encoding[8]);
 			int i10 = base64_chars.indexOf(encoding[9]);
 			int i11 = base64_chars.indexOf(encoding[10]);
-		    int perm = (i9 * 4096 + i10*64 + i11) % 40320;
-		    boolean[] used = new boolean[8];
-		    for (int i = 8; i >= 1; i--) {
-		    	int j = perm % i;
-		    	perm /= i;
-		    	int k;
-		    	// select the jth unused char
-		    	for (k = 0; j != 0 || used[k]; k++)
-		    		if (!used[k]) j--;
-		    	used[k] = true;
-		    	b.append(unshuffled.charAt(k));
-		    }
-		    result = b.toString();
+			int perm = (i9 * 4096 + i10 * 64 + i11) % 40320;
+			boolean[] used = new boolean[8];
+			for (int i = 8; i >= 1; i--) {
+				int j = perm % i;
+				perm /= i;
+				int k;
+				// select the jth unused char
+				for (k = 0; j != 0 || used[k]; k++)
+					if (!used[k])
+						j--;
+				used[k] = true;
+				b.append(unshuffled.charAt(k));
+			}
+			result = b.toString();
 		}
 		return result;
 	}
