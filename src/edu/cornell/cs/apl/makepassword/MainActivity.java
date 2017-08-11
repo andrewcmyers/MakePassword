@@ -5,9 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Writer;
-
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;
@@ -87,15 +84,16 @@ public class MainActivity extends Activity {
 	}
 	
 	private void readKeyFile(LogView log) {
-		try {
-			FileOutputStream foo = openFileOutput("put_keyfile_here", 0);		
-			Writer w = new PrintWriter(foo);
-			try {
-				w.append("dummy content");
-				w.close();
-			} catch (IOException e1) {
-				log.log("I/O exception writing");
-			}	
+// /* bootstrapping code that should not be needed. */
+//		try {
+//			FileOutputStream foo = openFileOutput(keyfilename, 0);		
+//			Writer w = new PrintWriter(foo);
+//			try {
+//				w.append("dummy content");
+//				w.close();
+//			} catch (IOException e1) {
+//				log.log("I/O exception writing");
+//			}	
 			try {
 				FileInputStream keyfile = openFileInput(keyfilename);
 				key_length = keyfile.read(material);
@@ -105,9 +103,9 @@ public class MainActivity extends Activity {
 			} catch (IOException e) {
 				log.log("IO error reading key file");
 			}
-		} catch (FileNotFoundException e1) {
-			log.log("Cannot write to dummy file.");
-		}
+//		} catch (FileNotFoundException e1) {
+//			log.log("Cannot write to dummy file.");
+//		}
 	}
 
 	boolean findExternalKeyfile(final LogView log) {

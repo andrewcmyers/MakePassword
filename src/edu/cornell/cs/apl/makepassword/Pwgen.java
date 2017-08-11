@@ -3,7 +3,6 @@ package edu.cornell.cs.apl.makepassword;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.prefs.AbstractPreferences;
 import org.apache.commons.codec.binary.Base64;
 
 public class Pwgen {
