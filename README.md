@@ -18,6 +18,8 @@ customized to your own requirements.
 
 To create a key-file, I recommend the following command:
 
+```
   head -c 500 < /dev/random  >  <filename>
+```
 
 Written by Andrew Myers, c. 2010. Version of Oct. 23, 2012.
