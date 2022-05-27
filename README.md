@@ -1,7 +1,11 @@
 # MakePassword: A password generator
 
+MakePassword allows you to have strong passwords without storing them at an
+external website that could be compromised. It generates passwords in a
+reproducible way so you get the same strong password every time you need it.
+
 Passwords are generated from three pieces of information: the name of the
-entity for which a password is being generated (public), a passphrase known
+entity for which a password is being generated (public and memorable), a passphrase known
 by the user (a relatively weak secret but not stored anywhere on the
 computer), and a file containing random data (a strong secret but one that
 might be compromised by an adversary who has taken over the machine).  It is
